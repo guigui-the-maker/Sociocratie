@@ -1,0 +1,1 @@
+var CERCLES_CONFIG = ["Général","LeTroisieme","Protocole"];

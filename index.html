@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Sociocratie OS - Hub</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;800&display=swap">
+    <script src="cercles-data.js"></script>
+    
+    <style>
+        :root {
+            --primary: #6366f1;
+            --bg: #f1f5f9;
+            --text: #1e293b;
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%); 
+            margin: 0; 
+            padding: 60px 20px; 
+            text-align: center; 
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        h1 { 
+            font-weight: 800; 
+            font-size: 2.5rem; 
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #6366f1, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.subtitle { color: #64748b; margin-bottom: 40px; }
+
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+            gap: 25px; 
+            max-width: 1000px; 
+            margin: 0 auto 60px; 
+        }
+
+        .card { 
+            background: white; 
+            padding: 35px; 
+            border-radius: 24px; 
+            text-decoration: none; 
+            color: var(--text); 
+            font-weight: 800; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); 
+            transition: all 0.3s ease; 
+            border: 1px solid rgba(255,255,255,0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15);
+            border-color: var(--primary);
+        }
+
+        .card span.icon {
+            font-size: 2.5rem;
+            background: #f1f5f9;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .tools { 
+            display: flex; 
+            justify-content: center; 
+            gap: 30px; 
+            padding-top: 30px; 
+            border-top: 1px solid #cbd5e1;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .btn-tool { 
+            color: #64748b; 
+            text-decoration: none; 
+            font-size: 0.95rem; 
+            font-weight: 600; 
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+
+        .btn-tool:hover { color: var(--primary); }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            padding: 40px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 20px;
+            border: 2px dashed #cbd5e1;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Écosystème Sociocratique</h1>
+    <p class="subtitle">Accédez aux cercles de gouvernance et aux outils de facilitation.</p>
+
+    <div id="cercleList" class="grid">
+        </div>
+
+    <div class="tools">
+        <a href="generateur-cr.html" class="btn-tool">✍️ Générateur de CR</a>
+        <a href="timer-sociocratique.html" class="btn-tool">⏱️ Timer de Parole</a>
+    </div>
+
+    <script>
+        // On récupère la liste depuis cercles-data.js
+        const container = document.getElementById('cercleList');
+
+        if (typeof CERCLES_CONFIG !== 'undefined' && CERCLES_CONFIG.length > 0) {
+            CERCLES_CONFIG.forEach(c => {
+                // Nettoyage du nom pour le dossier (ex: "Événements" -> "Cercle-Evenements")
+                const folderName = "Cercle-" + c.trim().replace(/\s+/g, '-');
+                
+                // CRÉATION DE LA CARTE POINTANT VERS menu.html
+                container.innerHTML += `
+                    <a href="${folderName}/menu.html" class="card">
+                        <span class="icon">⭕</span>
+                        <div>
+                            <div style="font-size: 1.2rem;">Cercle</div>
+                            <div style="color: var(--primary); font-size: 1.4rem;">${c}</div>
+                        </div>
+                    </a>
+                `;
+            });
+        } else {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <p>Aucun cercle n'a encore été créé.</p>
+                    <a href="generateur-cr.html" style="color: var(--primary); font-weight: bold;">Créer un premier compte rendu →</a>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
